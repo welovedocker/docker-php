@@ -20,6 +20,12 @@ ENV MEMCACHE_VERSION 4.0.5.2
 
 ENV IMAGICK_VERSION 3.4.4
 
+# swoole 版本
+
+ENV SWOOLE_VERSION 4.5.2
+ENV SWOOLE_SOURCE_DIR /tmp/swoole-src-$SWOOLE_VERSION
+ENV SWOOLE_URL https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION.tar.gz
+
 # mongodb
 
 ENV MONGO_VERSION 1.14.0
@@ -127,6 +133,22 @@ RUN set -eux; \
     \
     pecl install imagick-$IMAGICK_VERSION \
         && docker-php-ext-enable imagick \
+    ; \
+    \
+    # 安装swoole拓展
+    curl --noproxy "*" --progress-bar -v -fsSL -o /tmp/swoole.tar.gz "$SWOOLE_URL"; \
+    cd /tmp && tar -zxvf swoole.tar.gz -C /tmp; \
+    cd $SWOOLE_SOURCE_DIR; \
+    phpize && ./configure --enable-openssl --enable-sockets --enable-http2 --enable-mysqlnd; \
+    make -j$(nproc) && make install; \
+    make clean \
+    ; \
+    \
+    # 生成拓展ini
+    \
+    touch /usr/local/etc/php/conf.d/swoole.ini; \
+    echo 'extension=swoole.so' > /usr/local/etc/php/conf.d/swoole.ini; \
+    rm -rf $SWOOLE_SOURCE_DIR /tmp/swoole.tar.gz \
     ; \
     \
     runDeps="$( \
