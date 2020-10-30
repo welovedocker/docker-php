@@ -11,7 +11,10 @@ ENV MEMCACHED_VERSION 3.1.5
 
 # redis 拓展版本
 
-ENV  REDIS_VERSION 5.3.2
+ENV REDIS_VERSION 5.3.2
+
+# memcache 拓展版本
+ENV MEMCACHE_VERSION 4.0.5.2
 
 # imagick 拓展版本
 
@@ -104,25 +107,25 @@ RUN set -eux; \
     \
     # 安装redis拓展
     \
-    curl --noproxy "*" --progress-bar -v -fsSL -o /tmp/redis.tgz https://pecl.php.net/get/redis-${REDIS_VERSION}.tgz && pecl install redis.tgz \
+    pecl install redis-$REDIS_VERSION \
         && docker-php-ext-enable redis \
     ; \
     \
     #安装　mongodb拓展
     \
-     curl --noproxy "*" --progress-bar -v -fsSL -o /tmp/mongodb.tgz https://pecl.php.net/get/mongodb-${MONGO_PHP_VERSION}.tgz && pecl install mongodb.tgz \
+    pecl install mongodb-$MONGO_PHP_VERSION \
         && docker-php-ext-enable mongodb \
     ; \
     \
     # 安装memcached 拓展
     \
-    curl --noproxy "*" --progress-bar -v -fsSL -o /tmp/memcached.tgz https://pecl.php.net/get/memcached-$MEMCACHED_VERSION.tgz && pecl install memcached.tgz \
+    pecl install memcached-$MEMCACHED_VERSION \
         && docker-php-ext-enable memcached \
     ; \
     \
     # 安装imagemagick拓展
     \
-    curl --noproxy "*" --progress-bar -v -fsSL -o /tmp/imagick.tgz https://pecl.php.net/get/imagick-${IMAGICK_VERSION}.tgz && pecl install imagick.tgz \
+    pecl install imagick-$IMAGICK_VERSION \
         && docker-php-ext-enable imagick \
     ; \
     \
