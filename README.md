@@ -27,4 +27,5 @@
 + redis
 + memcached
 + mongodb
++ swoole
 
