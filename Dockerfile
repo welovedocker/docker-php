@@ -2,7 +2,6 @@ FROM php:7.4.8-fpm-alpine
 
 LABEL maintainer="shanezhiu <shanezhiu@gmail.com>"
 
-
 # php 容器配置文件目录
 #ENV PHP_INI_DIR /usr/local/etc/php
 
@@ -128,8 +127,5 @@ RUN set -eux; \
 # 使用开发环境php.ini
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
-# 指定用户，如果不指定用户，默认使用root
-USER 82:82
 
 CMD ["php-fpm", "-F"]
