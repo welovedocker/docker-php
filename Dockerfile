@@ -52,11 +52,13 @@ RUN set -eux; \
             libbson-dev \
             # mongo-c-driver-dev
             mongo-c-driver-dev \
+            # libzip-dev
+            libzip-dev \
         ; \
         \
         # 安装 pdo_mysql bcmath, opcache, sockets,pcntl,calendar,sysvmsg,sysvsem, sysvshm拓展
         \
-        docker-php-ext-install pdo_mysql bcmath opcache sockets pcntl calendar sysvmsg sysvsem sysvshm \
+        docker-php-ext-install pdo_mysql bcmath opcache sockets pcntl calendar sysvmsg sysvsem sysvshm zip \
                && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
                && docker-php-ext-install -j$(nproc) gd \
         ; \
