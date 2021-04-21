@@ -58,7 +58,7 @@ RUN set -eux; \
         \
         # 安装 pdo_mysql bcmath, opcache, sockets,pcntl,calendar,sysvmsg,sysvsem, sysvshm拓展
         \
-        docker-php-ext-install pdo_mysql bcmath opcache sockets pcntl calendar sysvmsg sysvsem sysvshm zip \
+        docker-php-ext-install pdo_mysql mysqli bcmath opcache sockets pcntl calendar sysvmsg sysvsem sysvshm zip \
                && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
                && docker-php-ext-install -j$(nproc) gd \
         ; \
